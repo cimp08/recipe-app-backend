@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogRecipe;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
-    public function getAllRecipies(){
-        $recipies = Recipe::get()->toJson(JSON_PRETTY_PRINT);
+    public function getAllRecipies($listid){
+        $id = LogRecipe::where('log_id', $listid)->get('recipe_id');
+
+        $recipies = Recipe::whereIn('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+        //return response(["id" => $id, "recipes" => $recipies], 200);
         return response($recipies, 200);
     }
 
+    /*
     public function getRecipe($id){
         if(Recipe::where('id', $id)->exists()) {
             $recipe = Recipe::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
@@ -21,7 +26,7 @@ class RecipeController extends Controller
                 "message" => "Recipe not found"
             ], 404);
         }
-    }
+    }*/
 
     public function createRecipe(Request $request){
         $recipe = new Recipe;
