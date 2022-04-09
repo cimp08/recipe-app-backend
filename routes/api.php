@@ -26,15 +26,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     /* RECIPIES */
-    Route::get('recipies', [RecipeController::class, 'getAllRecipies']);
-    Route::get('recipies/{id}', [RecipeController::class, 'getRecipe']);
+    Route::get('recipies/{listid}', [RecipeController::class, 'getAllRecipies']);
+    //Route::get('recipies/{id}', [RecipeController::class, 'getRecipe']);
     Route::post('recipies', [RecipeController::class, 'createRecipe']);
     Route::put('recipies/{id}', [RecipeController::class, 'updateRecipe']);
     Route::delete('recipies/{id}', [RecipeController::class, 'deleteRecipe']);
 
     /* LISTS */
-    Route::get('lists', [LogController::class, 'getAllLists']);
-    Route::get('lists/{id}', [LogController::class, 'getList']);
+    Route::get('lists/{id}', [LogController::class, 'getAllLists']);
+    Route::get('list/{id}', [LogController::class, 'getList']);
     Route::post('lists', [LogController::class, 'createList']);
     Route::put('lists/{id}', [LogController::class, 'updateList']);
     Route::delete('lists/{id}', [LogController::class, 'deleteList']);
