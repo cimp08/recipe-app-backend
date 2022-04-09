@@ -17,7 +17,7 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->string('recipe_api_id');
             $table->string('label');
-            $table->string('photo_url');
+            $table->text('photo_url');
             $table->timestamps();
         });
     }
