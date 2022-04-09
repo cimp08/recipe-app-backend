@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
-    public function getAllLists(){
-        $lists = Log::get()->toJson(JSON_PRETTY_PRINT);
-        return response($lists, 200);
+    public function getAllLists($user_id){
+        if(Log::where('user_id', $user_id)->exists()) {
+            $lists = Log::where('user_id', $user_id)->get()->toJson(JSON_PRETTY_PRINT);
+            return response($lists, 200);
+        } else {
+            return response()->json([
+                "message" => "Lists not found"
+            ], 404);
+        }
     }
 
     public function getList($id){
@@ -21,6 +27,12 @@ class LogController extends Controller
                 "message" => "List not found"
             ], 404);
         }
+    }
+
+    public function getListRecipes($logid, $id){
+        if(auth()->id == $id)
+        $allMyRecipes = Log::where('id', $logid)->recipes();
+        return $allMyRecipes;
     }
 
     public function createList(Request $request){
