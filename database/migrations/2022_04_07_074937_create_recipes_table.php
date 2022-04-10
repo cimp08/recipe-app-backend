@@ -18,10 +18,10 @@ class CreateRecipesTable extends Migration
             $table->string('recipe_api_id');
             $table->string('label');
             $table->text('photo_url');
+            $table->unsignedBigInteger('log_id')->onDelete('cascade'); // if log deletes, the comment deletes in db
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
