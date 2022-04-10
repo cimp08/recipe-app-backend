@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LogRecipe;
+/* use App\Models\LogRecipe; */
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
     public function getAllRecipies($listid){
-        $id = LogRecipe::where('log_id', $listid)->get('recipe_id');
-
-        $recipies = Recipe::whereIn('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+        $recipies = Recipe::where('log_id', $listid)->get()->toJson(JSON_PRETTY_PRINT);
+       /*  $recipies = Recipe::whereIn('id', $id)->get()->get()->toJson(JSON_PRETTY_PRINT); */
         //return response(["id" => $id, "recipes" => $recipies], 200);
         return response($recipies, 200);
     }
@@ -29,18 +28,27 @@ class RecipeController extends Controller
     }*/
 
     public function createRecipe(Request $request){
-        $recipe = new Recipe;
-        $recipe->recipe_api_id = $request->recipe_api_id;
-        $recipe->label = $request->label;
-        $recipe->photo_url = $request->photo_url;
-        $recipe->save();
+        if(Recipe::where('recipe_api_id', $request->recipe_api_id)->where('log_id', $request->log_id)->exists()){
+            return response()->json([
+                "message" => "Recipe already in the list"
+            ]);
+        } else {
+            $recipe = new Recipe;
+            $recipe->recipe_api_id = $request->recipe_api_id;
+            $recipe->label = $request->label;
+            $recipe->photo_url = $request->photo_url;
+            $recipe->log_id = $request->log_id;
+            $recipe->save();
 
-        return response()->json([
-            "message" => "Recipe record has been created"
-        ]);
+            return response()->json([
+                "message" => "Recipe record has been created"
+            ]);
+        }
+        
+        
     }
 
-    public function updateRecipe(Request $request, $id){
+    /* public function updateRecipe(Request $request, $id){
         if(Recipe::where('id', $id)->exists()) {
             $recipe = Recipe::find($id);
             $recipe->recipe_api_id = is_null($request->recipe_api_id) ? $recipe->recipe_api_id : $request->recipe_api_id;
@@ -56,7 +64,7 @@ class RecipeController extends Controller
                 "message" => "Recipe not found"
             ], 404);
         }
-    }
+    } */
 
     public function deleteRecipe($id){
         if(Recipe::where('id', $id)->exists()) {
