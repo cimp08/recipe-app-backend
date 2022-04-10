@@ -14,6 +14,6 @@ class Log extends Model
 
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class)->withTimestamps();
+        return $this->hasMany(Recipe::class);
     }
 }
