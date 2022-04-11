@@ -15,13 +15,15 @@ class CreateRecipesTable extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
+            /* $table->unsignedBigInteger('log_id'); */ 
+            $table->foreignId('log_id')->constrained('logs')->onDelete('cascade');
             $table->string('recipe_api_id');
             $table->string('label');
             $table->text('photo_url');
-            $table->unsignedBigInteger('log_id')->onDelete('cascade'); // if log deletes, the comment deletes in db
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *

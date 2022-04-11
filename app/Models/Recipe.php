@@ -12,7 +12,7 @@ class Recipe extends Model
     protected $table = 'recipes';
     protected $fillable = ['recipe_api_id', 'label', 'photo_url', 'log_id'];
 
-    public function logs()
+     public function logs()
     {
         return $this->belongsToMany(Log::class);
     }
