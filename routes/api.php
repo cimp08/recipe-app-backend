@@ -38,9 +38,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('lists', [LogController::class, 'createList']);
     Route::put('lists/{id}', [LogController::class, 'updateList']);
     Route::delete('lists/{id}', [LogController::class, 'deleteList']);
-
-    /* PIVOT RECIPE_LIST */
-    /* Route::post('recipe-lists', [LogRecipeController::class, 'createRecipeList']);
-    Route::delete('recipe-lists/{id}', [LogRecipeController::class, 'deleteRecipeList']); */
-
 });
