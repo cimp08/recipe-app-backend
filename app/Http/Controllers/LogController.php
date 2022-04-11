@@ -13,8 +13,8 @@ class LogController extends Controller
             return response($lists, 200);
         } else {
             return response()->json([
-                "message" => "Lists not found"
-            ], 404);
+                "message" => "Users list are empty"
+            ]);
         }
     }
 
