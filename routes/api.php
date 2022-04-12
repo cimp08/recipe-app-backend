@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     /* LISTS */
     Route::get('lists/{id}', [LogController::class, 'getAllLists']);
     Route::get('list/{id}', [LogController::class, 'getList']);
-    Route::post('lists/', [LogController::class, 'createList']);
+    Route::post('lists', [LogController::class, 'createList']);
     Route::put('lists/{id}', [LogController::class, 'updateList']);
     Route::delete('lists/{id}', [LogController::class, 'deleteList']);
 });
